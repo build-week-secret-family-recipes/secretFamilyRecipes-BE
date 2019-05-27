@@ -1,8 +1,10 @@
-const express = require('express');
+const express = require('express')
+
+const configMiddleware = require('../config/middleware')
 
 const server = express();
 
-server.use(express.json());
+configMiddleware(server);
 
 server.get('/', async (req, res) => {
   res.status(200).json({ api: 'running' })
