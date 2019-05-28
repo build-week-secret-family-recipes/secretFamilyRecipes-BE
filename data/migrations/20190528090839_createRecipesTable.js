@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
   return knex.schema.createTable('recipes', tbl => {
     tbl.increments()
     tbl
-      .string('title', 128)
+      .string('name', 128)
       .notNullable()
       .unique()
     tbl
