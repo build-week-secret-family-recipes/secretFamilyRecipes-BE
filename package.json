@@ -33,7 +33,6 @@
     "jest": "^24.8.0",
     "jest-dom": "^3.4.0",
     "knex-cleaner": "^1.1.4",
-    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
   }

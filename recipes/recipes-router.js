@@ -48,4 +48,25 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const count = await Recipes.removeRecipe(req.params.id)
+    if (count > 0) {
+      res.status(204).end()
+    } else {
+      res.status(404).json({
+        message: 'That recipe does not exist, maybe it was deleted already'
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: 'We ran into an error removing the recipe'
+    })
+  }
+})
+
+// router.put('/:id', async (req, res) => {
+
+// })
+
 module.exports = router;
