@@ -40,9 +40,13 @@ function addRecipe(recipe) {
 }
 
 function removeRecipe(id) {
-
+  return db('recipes')
+    .where({ id })
+    .del()
 }
 
-function updateRecipe(id) {
-
+function updateRecipe(id, changes) {
+  return db('recipes')
+    .where({ id })
+    .update(changes)
 }
