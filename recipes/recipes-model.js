@@ -23,7 +23,7 @@ function getAllRecipes() {
 
 function getRecipeById(id) {
   return db('recipes')
-    .where({ 'recipes.category_id': id })
+    .where({ 'recipes.id': id })
     .join('categories', 'recipes.category_id', 'categories.id')
     .select(
       'recipes.id',
