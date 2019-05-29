@@ -11,6 +11,8 @@ exports.up = function (knex, Promise) {
     tbl
       .text('instructions')
     tbl
+      .text('ingredients')
+    tbl
       .integer('category_id')
       .unsigned()
       .references('id')

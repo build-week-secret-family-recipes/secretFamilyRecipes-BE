@@ -17,15 +17,17 @@ function getAllRecipes() {
       {
         category: 'categories.name'
       },
-      'recipes.source'
+      'recipes.source',
+      'recipes.instructions',
+      'recipes.ingredients'
     )
 }
 
 function getRecipeById(id) {
   return db('recipes')
     .where({ 'recipes.id': id })
+    .first()
     .join('categories', 'recipes.category_id', 'categories.id')
-    .join('ingredients', 'recipes.id', 'ingredients.id')
     .select(
       'recipes.id',
       'recipes.name',
@@ -34,7 +36,7 @@ function getRecipeById(id) {
       },
       'recipes.source',
       'recipes.instructions',
-      { ingredient: 'ingredients.name' }
+      'recipes.ingredients'
     )
 }
 
