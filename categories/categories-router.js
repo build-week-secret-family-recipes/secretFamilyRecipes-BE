@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const db = require('../data/dbConfig')
 
+const db = require('../data/dbConfig')
 const Categories = require('./categories-model')
 
 router.get('/', async (req, res) => {
@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: 'We ran into an error retrieving the categories.'
+        message: 'We ran into an error retrieving the category.'
       })
     })
 })
