@@ -2,7 +2,7 @@ const db = require('../data/dbConfig')
 
 module.exports = {
   getAllRecipes,
-  getRecipeByCat,
+  getRecipeById,
   addRecipe,
   removeRecipe,
   updateRecipe
@@ -16,11 +16,12 @@ function getAllRecipes() {
       'recipes.name',
       {
         category: 'categories.name'
-      }
+      },
+      'recipes.source'
     )
 }
 
-function getRecipeByCat(id) {
+function getRecipeById(id) {
   return db('recipes')
     .where({ 'recipes.category_id': id })
     .join('categories', 'recipes.category_id', 'categories.id')
