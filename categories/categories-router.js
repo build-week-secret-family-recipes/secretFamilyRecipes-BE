@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const db = require('../data/dbConfig')
 
 const Categories = require('./categories-model')
 
@@ -13,21 +14,43 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:id', async (req, res) => {
-  try {
-    const cat = await Categories.getCatById(req.params.id)
-    if (cat) {
-      res.status(200).json(cat)
-    } else {
-      res.status(404).json({
-        message: 'Category not found'
-      })
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: 'We ran into an error retrieving the categories.'
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  db('categories')
+    .where({ id })
+    .first()
+    .then(categories => {
+      db('recipes')
+        .where({ 'category_id': id })
+        .then(recipes => {
+          categories.recipes = recipes;
+          return res.status(200).json(categories)
+        })
     })
-  }
+    .catch(error => {
+      res.status(500).json({
+        message: 'We ran into an error retrieving the categories.'
+      })
+    })
+})
+
+router.get('/:id/recipes', (req, res) => {
+  db('categories')
+    .join('recipes', 'categories.id', 'recipes.category_id')
+    .where({ category_id: req.params.id })
+    .select(
+      { category: 'categories.name' },
+      'recipes.name',
+      'recipes.source'
+    )
+    .then(recipes => {
+      res.status(200).json(recipes)
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'We ran into an error retrieving the recipes.'
+      })
+    })
 })
 
 router.post('/', async (req, res) => {
