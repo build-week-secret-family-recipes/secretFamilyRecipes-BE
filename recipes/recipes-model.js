@@ -40,8 +40,11 @@ function getRecipeById(id) {
     )
 }
 
-function addRecipe(recipe) {
-  return db('recipes').insert(recipe, 'id')
+async function addRecipe(recipe) {
+  const [id] = await db('recipes').insert(recipe, 'id')
+  return db('recipes')
+    .where({ id })
+    .first()
 }
 
 function removeRecipe(id) {

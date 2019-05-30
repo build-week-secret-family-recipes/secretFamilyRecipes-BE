@@ -16,6 +16,9 @@ function getCatById(id) {
     .first()
 }
 
-function addCat() {
-  return db('categories').insert(category, 'id')
+async function addCat(category) {
+  const [id] = await db('categories').insert(category, 'id')
+  return db('categories')
+    .where({ id })
+    .first()
 }
